@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Admin - Creación Cuenta (#25)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root { 
+            --color-primary: #4CAF50; /* Verde */
+            --color-secondary: #FF9800; /* Naranja */
+        }
+        body { background-color: #f7f7f7; }
+        .navbar { background-color: var(--color-primary); }
+
+        /* Estilos específicos para botones naranjas */
+        .btn-ecomarket-secondary {
+            background-color: var(--color-secondary);
+            border-color: var(--color-secondary);
+            color: white;
+            transition: background-color 0.2s;
+        }
+        .btn-ecomarket-secondary:hover {
+            background-color: #E68900;
+            border-color: #E68900;
+            color: white;
+        }
+    </style>
+</head>
+<body id="admin-create-account-page">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white fw-bold" href="#">
+            <span style="color: var(--color-secondary);">Eco</span>Market 🥦🍎
+        </a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    
+    <div class="row align-items-center mb-4 border-bottom pb-2">
+        <div class="col-6">
+            <h2 class="fw-bold mb-0 text-start">Creación Cuenta</h2>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-ecomarket-secondary" onclick="goBackToDashboard()">
+                <i class="bi bi-arrow-left me-2"></i> Regresar
+            </button>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card p-4 shadow-sm">
+                <form id="create-account-form" class="row g-3" novalidate>
+                    
+                    <h5 class="col-12 mb-3 text-secondary">Tipo de Cuenta a Crear:</h5>
+                    <div class="col-12 mb-4">
+                        <div class="btn-group w-100" role="group" aria-label="Tipo de Cuenta">
+                            <input type="radio" class="btn-check" name="account-type" id="type-cliente" value="cliente" autocomplete="off" checked>
+                            <label class="btn btn-outline-success" for="type-cliente">Cliente</label>
+
+                            <input type="radio" class="btn-check" name="account-type" id="type-admin" value="administrador" autocomplete="off">
+                            <label class="btn btn-outline-danger" for="type-admin">Administrador</label>
+                        </div>
+                    </div>
+                    
+                    <h5 class="col-12 mb-3 text-secondary">Datos de Usuario Requeridos:</h5>
+                    
+                    <div class="col-md-6">
+                        <label for="input-run" class="form-label">RUN (Ej: 19876543-2)</label>
+                        <input type="text" class="form-control" id="input-run" pattern="^\d{1,8}-[\dkK]$" required>
+                        <div class="invalid-feedback">RUN inválido. Formato: 12345678-9</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="input-nombre" class="form-label">Nombre Completo</label>
+                        <input type="text" class="form-control" id="input-nombre" required>
+                        <div class="invalid-feedback">El nombre es obligatorio.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="input-email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="input-email" required>
+                        <div class="invalid-feedback">Formato de email incorrecto.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="input-telefono" class="form-label">Teléfono (9 dígitos)</label>
+                        <input type="tel" class="form-control" id="input-telefono" pattern="[0-9]{9}" required>
+                        <div class="invalid-feedback">El teléfono debe tener 9 dígitos.</div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="input-fecha-nacimiento" class="form-label">Fecha de Nacimiento</label>
+                        <input type="date" class="form-control" id="input-fecha-nacimiento" required>
+                        <div class="invalid-feedback">La fecha de nacimiento es obligatoria.</div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="input-sexo" class="form-label">Sexo</label>
+                        <select id="input-sexo" class="form-select" required>
+                            <option value="" disabled selected>Seleccionar...</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                        <div class="invalid-feedback">Debe seleccionar el sexo.</div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="input-password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="input-password" 
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                        <div class="invalid-feedback">La contraseña debe tener al menos 8 caracteres, 1 mayúscula y 1 número.</div>
+                    </div>
+                    
+                    <div class="col-12 mb-4">
+                        <label for="input-address" class="form-label">Dirección de Envío Principal</label>
+                        <input type="text" class="form-control" id="input-address" required>
+                        <div class="invalid-feedback">La dirección es obligatoria.</div>
+                    </div>
+
+                    <div class="col-12 d-grid">
+                        <button type="submit" class="btn btn-ecomarket-secondary btn-lg">
+                            <i class="bi bi-person-check-fill me-2"></i> Registrar Cuenta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

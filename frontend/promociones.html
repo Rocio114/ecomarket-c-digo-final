@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Promociones y Ofertas - Ecomarket (#17)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* Paleta de colores Ecomarket */
+        :root {
+            --color-primary: #4CAF50; /* Verde fresco */
+            --color-secondary: #FF9800; /* Naranja/Naranja */
+        }
+        body {
+            background-color: #f7f7f7;
+        }
+        .navbar {
+            background-color: var(--color-primary);
+        }
+        .header-btn {
+            color: white;
+            border-color: transparent;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        .header-btn i {
+            margin-right: 5px;
+            font-size: 1.1rem;
+        }
+        .cart-icon {
+            color: var(--color-secondary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            position: relative;
+        }
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 0 6px;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            min-width: 20px;
+            text-align: center;
+        }
+        .product-card {
+            transition: transform 0.2s;
+            border: 1px solid #ddd;
+        }
+        .add-to-cart-btn {
+            background-color: var(--color-secondary);
+            border-color: var(--color-secondary);
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            line-height: 1;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+            margin-right: 8px;
+        }
+        .discount-badge {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        /* Estilos del Offcanvas para que se vea bien */
+        .offcanvas-footer {
+            border-top: 1px solid #eee;
+            padding: 10px 15px;
+        }
+        .offcanvas-link {
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body id="promotions-page">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white fw-bold" href="#">
+            <span style="color: var(--color-secondary);">Eco</span>Market 🥦🍎
+        </a>
+        
+        <div class="d-flex align-items-center">
+            <button class="btn btn-sm header-btn me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasFilter">
+                <i class="bi bi-funnel"></i> Filtro
+            </button>
+            <button class="btn btn-sm header-btn me-2" onclick="goToCatalog()">
+                <i class="bi bi-shop"></i> Catálogo
+            </button>
+            <button class="btn btn-sm header-btn" onclick="goToProfile()">
+                <i class="bi bi-person-circle"></i> Perfil
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid border-bottom p-3 bg-white">
+    <div class="row align-items-center">
+        <div class="col-8">
+             <h2 class="fw-bold mb-0 text-start">Promociones</h2>
+        </div>
+        <div class="col-4 d-flex justify-content-end">
+            <span class="cart-icon" onclick="goToCart()">
+                🛒 Carrito
+                <span id="cart-counter" class="cart-count">0</span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasFilterLabel">
+    <div class="offcanvas-header bg-success text-white">
+        <h5 class="offcanvas-title" id="offcanvasFilterLabel">Opciones de Filtrado</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        
+        <div id="product-filters">
+            <h6 class="mb-3 text-secondary">Búsqueda por Nombre / Descripción</h6>
+            <div class="mb-4">
+                <input type="text" class="form-control" id="searchText" placeholder="Ej: Manzana, Tomate, Orgánico...">
+            </div>
+
+            <h6 class="mb-3 text-secondary">Categoría de Producto</h6>
+            <div class="mb-5">
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="category-dropdown-btn">
+                        Seleccionar Categoría
+                    </button>
+                    <ul class="dropdown-menu w-100" aria-labelledby="category-dropdown-btn">
+                        <li><a class="dropdown-item" href="#" data-category="all">Todas</a></li>
+                        <li><a class="dropdown-item" href="#" data-category="fruits">Frutas</a></li>
+                        <li><a class="dropdown-item" href="#" data-category="vegetables">Verduras</a></li>
+                        <li><a class="dropdown-item" href="#" data-category="nuts">Frutos Secos</a></li>
+                    </ul>
+                    <input type="hidden" id="selected-category" value="all">
+                </div>
+            </div>
+            
+            <div class="d-grid mb-4">
+                <button type="button" class="btn btn-primary btn-lg" onclick="applyFilters()">OK (Aplicar Filtro)</button>
+            </div>
+        </div>
+        
+        <hr>
+
+        <h6 class="mb-3 text-secondary">Navegación Rápida</h6>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item offcanvas-link" onclick="goToCatalog()">
+                <i class="bi bi-shop me-3 text-success"></i> Catálogo
+            </li>
+            <li class="list-group-item offcanvas-link" onclick="goToProfile()">
+                <i class="bi bi-person-circle me-3 text-primary"></i> Perfil
+            </li>
+            <li class="list-group-item offcanvas-link" onclick="goToCart()">
+                <i class="bi bi-cart me-3 text-warning"></i> Carrito
+                <span id="offcanvas-cart-counter" class="badge bg-danger rounded-pill float-end">0</span>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div id="product-list-container" class="row">
+        </div>
+    
+    <div id="pagination-container" class="row my-5">
+        <div class="col-12 d-flex justify-content-center">
+            <nav><ul id="pagination-menu" class="pagination">
+            </ul></nav>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
