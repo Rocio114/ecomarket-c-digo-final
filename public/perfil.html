@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Perfil de Cliente - Ecomarket (#15)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root { --color-primary: #4CAF50; --color-secondary: #FF9800; }
+        body { background-color: #f7f7f7; }
+        .navbar { background-color: var(--color-primary); }
+        .header-btn { color: white; border-color: transparent; }
+        .data-display, .form-control[readonly] {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+            min-height: calc(1.5em + 0.75rem + 2px); 
+            display: flex;
+            align-items: center;
+        }
+        .form-control:not([readonly]) {
+            border-color: var(--color-secondary);
+        }
+        .nav-buttons button {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        .nav-buttons button:hover {
+            background-color: #43A047;
+            border-color: #43A047;
+        }
+        #edit-button {
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            font-weight: bold;
+        }
+        #edit-button:hover {
+            background-color: var(--color-primary);
+            color: white;
+        }
+    </style>
+</head>
+<body id="profile-page">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white fw-bold" href="#">
+            <span style="color: var(--color-secondary);">Eco</span>Market 🥦🍎
+        </a>
+        <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-outline-light me-2 btn-danger" id="logout-button">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    
+    <div class="row align-items-center mb-4">
+        <div class="col-6">
+            <h2 class="fw-bold mb-0 text-start" id="page-title">Perfil</h2>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-outline-light" id="edit-button" onclick="toggleEditMode(true)">
+                <i class="bi bi-pencil-square me-2"></i> Editar
+            </button>
+        </div>
+    </div>
+
+    <form id="profile-form" novalidate>
+        <div class="row bg-white p-4 rounded shadow-sm">
+            <div class="col-md-6 mb-3">
+                <label for="run" class="form-label">RUN:</label>
+                <input type="text" id="run" class="form-control" readonly required>
+                <div class="invalid-feedback">Formato de RUN inválido.</div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label">Nombre de Usuario:</label>
+                <input type="text" id="nombre" class="form-control" readonly required>
+                <div class="invalid-feedback">El nombre es obligatorio.</div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Correo Electrónico:</label>
+                <input type="email" id="email" class="form-control" readonly required>
+                <div class="invalid-feedback">Formato de email inválido.</div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="telefono" class="form-label">Teléfono:</label>
+                <input type="tel" id="telefono" class="form-control" readonly required pattern="[0-9]{9}">
+                <div class="invalid-feedback">El teléfono debe tener 9 dígitos.</div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="direccion" class="form-label">Dirección:</label>
+                <input type="text" id="direccion" class="form-control" readonly required>
+                <div class="invalid-feedback">La dirección es obligatoria.</div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
+                <input type="date" id="fechaNacimiento" class="form-control" readonly required>
+                <div class="invalid-feedback">La fecha de nacimiento es obligatoria.</div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <label class="form-label">Sexo:</label>
+                <select id="sexo" class="form-control" disabled required>
+                    <option value="">Selecciona</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 d-flex justify-content-center nav-buttons" id="navigation-buttons">
+                <button type="button" class="btn btn-primary btn-lg mx-2" onclick="goToOrders()">
+                    <i class="bi bi-list-check me-2"></i> Mis Pedidos
+                </button>
+                <button type="button" class="btn btn-primary btn-lg mx-2" onclick="goToCatalog()">
+                    <i class="bi bi-shop me-2"></i> Catálogo
+                </button>
+                <button type="button" class="btn btn-primary btn-lg mx-2" onclick="goToOffers()">
+                    <i class="bi bi-tags me-2"></i> Ofertas
+                </button>
+            </div>
+
+            <div class="col-12 d-flex justify-content-start d-none" id="confirm-buttons"> 
+                <button type="submit" class="btn btn-success btn-lg px-5">
+                    <i class="bi bi-check-lg me-2"></i> Confirmar
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-lg ms-3 px-5" onclick="toggleEditMode(false)">
+                    <i class="bi bi-x-lg me-2"></i> Cancelar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messageModalTitle">Mensaje</h5>
+            </div>
+            <div class="modal-body text-center">
+                <p id="modalMessageText"></p>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

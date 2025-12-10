@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Admin Dashboard - Ventas por Periodo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Incluir Chart.js para los gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    
+    <style>
+        :root { --color-primary: #4CAF50; --color-secondary: #FF9800; }
+        body { background-color: #f7f7f7; }
+        .navbar { background-color: var(--color-primary); }
+        .admin-nav-btn {
+            background-color: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .admin-nav-btn:hover { background-color: #E68900; }
+
+        /* Contenedor del gráfico para que ocupe espacio y sea responsivo */
+        .chart-wrapper {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            min-height: 400px;
+        }
+    </style>
+</head>
+<body id="admin-page">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white fw-bold" href="#">
+            <span style="color: var(--color-secondary);">Eco</span>Market 🥦🍎
+        </a>
+        <div class="d-flex align-items-center">
+            <button class="btn btn-outline-light me-2" id="admin-logout-button">
+                <i class="bi bi-box-arrow-right"></i> Salir
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <div class="d-flex flex-wrap justify-content-start mb-4 border-bottom pb-3">
+        <a href="admin_crear_cuenta.html" class="admin-nav-btn">
+            <i class="bi bi-person-add me-2"></i> Crear Cuenta
+        </a>
+        <a href="admin_productos.html" class="admin-nav-btn">
+            <i class="bi bi-box-seam-fill me-2"></i> Productos
+        </a>
+        <a href="admin_pedidos.html" class="admin-nav-btn">
+            <i class="bi bi-truck me-2"></i> Pedidos
+        </a>
+    </div>
+
+    <h2 class="fw-bold mb-4">Dashboard de Ventas</h2>
+
+    <!-- Filtros de periodo y tipo de gráfico -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-6">
+            <label for="periodFilter" class="form-label fw-bold">Filtrar por Período:</label>
+            <select id="periodFilter" class="form-select">
+                <option value="day">Último Día (Hoy)</option>
+                <option value="week">Última Semana</option>
+                <option value="month" selected>Último Mes</option>
+                <option value="year">Último Año</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="typeFilter" class="form-label fw-bold">Tipo de Análisis:</label>
+            <select id="typeFilter" class="form-select">
+                <option value="ventas" selected>Total de Ventas (Monto)</option>
+                <option value="producto">Ventas por Producto</option>
+                <option value="tipo">Ventas por Tipo de Producto</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Contenedor del gráfico Chart.js -->
+    <div class="chart-wrapper">
+        <div id="chart-loading" class="text-center p-5 text-muted d-none">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando datos...</span>
+            </div>
+            <p class="mt-2">Cargando datos de ventas...</p>
+        </div>
+        <canvas id="sales-chart" class="d-none"></canvas>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

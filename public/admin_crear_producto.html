@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Admin - Crear Producto (#26)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root { --color-primary: #4CAF50; --color-secondary: #FF9800; }
+        body { background-color: #f7f7f7; }
+        .navbar { background-color: var(--color-primary); }
+        .btn-ecomarket-secondary {
+            background-color: var(--color-secondary);
+            border-color: var(--color-secondary);
+            color: white;
+        }
+        .btn-ecomarket-secondary:hover {
+            background-color: #E68900;
+            border-color: #E68900;
+            color: white;
+        }
+    </style>
+</head>
+<body id="admin-create-product-page">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white fw-bold" href="#">
+            <span style="color: var(--color-secondary);">Eco</span>Market 🥦🍎
+        </a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    
+    <div class="row align-items-center mb-4 border-bottom pb-2">
+        <div class="col-6">
+            <h2 class="fw-bold mb-0 text-start">Crear Producto</h2>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-ecomarket-secondary" onclick="goBack()">
+                <i class="bi bi-arrow-left me-2"></i> Regresar
+            </button>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card p-4 shadow-sm">
+                <form id="create-product-form" class="row g-3" novalidate>
+                    
+                    <div class="col-md-8">
+                        <label for="input-name" class="form-label">Nombre del Producto</label>
+                        <input type="text" class="form-control" id="input-name" name="name" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="input-price" class="form-label">Precio ($)</label>
+                        <input type="number" class="form-control" id="input-price" name="price" min="1" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="input-discount" class="form-label">Descuento (%)</label>
+                        <input type="number" class="form-control" id="input-discount" name="discount" min="0" max="99" value="0" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="input-description" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="input-description" name="desc" rows="2" required></textarea>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="input-stock" class="form-label">Stock Inicial</label>
+                        <input type="number" class="form-control" id="input-stock" name="stock" min="0" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="input-category" class="form-label">Categoría</label>
+                        <select id="input-category" class="form-select" required>
+                            <option value="" disabled selected>Seleccionar...</option>
+                            <option value="Frutas">Frutas</option>
+                            <option value="Verduras">Verduras</option>
+                            <option value="Frutos Secos">Frutos Secos</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="input-image" class="form-label">Subir Imagen</label>
+                        <input type="file" class="form-control" id="input-image" name="image" accept="image/*" required>
+                    </div>
+                    
+                    <div class="col-12 text-end mt-4">
+                        <button type="submit" class="btn btn-ecomarket-secondary btn-lg">
+                            <i class="bi bi-box-fill me-2"></i> Crear Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messageModalTitle">Mensaje</h5>
+            </div>
+            <div class="modal-body text-center">
+                <p id="modalMessageText"></p>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

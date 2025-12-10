@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Mis Pedidos y Estados - Ecomarket (#18)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root { --color-primary: #4CAF50; --color-secondary: #FF9800; }
+        body { background-color: #f7f7f7; }
+        .navbar { background-color: var(--color-primary); }
+        .header-btn { color: white; border-color: transparent; }
+        .order-card { 
+            border: 1px solid #ddd;
+            border-left: 5px solid; /* Usado para indicar estado */
+            transition: box-shadow 0.2s;
+        }
+        .status-badge {
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .product-summary {
+            font-size: 0.9rem;
+            color: #555;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        /* Colores para los estados */
+        .status-preparacion { border-color: #f1c40f; background-color: #fffde7; }
+        .status-despacho { border-color: #e67e22; background-color: #fff3e0; }
+        .status-entregado { border-color: #27ae60; background-color: #e8f5e9; }
+        .status-anulado { border-color: #e74c3c; background-color: #fbecec; }
+    </style>
+</head>
+<body id="orders-page">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white fw-bold fs-4" href="#">
+            <span style="color: var(--color-secondary);">Eco</span>Market 🥦🍎
+        </a>
+        <div class="d-flex align-items-center">
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    
+    <div class="row align-items-center mb-4">
+        <div class="col-6">
+            <h2 class="fw-bold mb-0 text-start">Mis Pedidos</h2>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-outline-secondary" onclick="goBackToProfile()">
+                <i class="bi bi-arrow-left me-2"></i> Regresar
+            </button>
+        </div>
+    </div>
+
+    <div id="no-orders-message" class="col-12 text-center py-4 d-none">
+        <p class="text-muted">No tienes pedidos aún.</p>
+    </div>
+
+    <div id="orders-list" class="row"></div>
+</div>
+
+
+<div class="modal fade" id="anularModal" tabindex="-1" aria-labelledby="anularModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title" id="anularModalLabel">Anular Pedido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <p>Está a punto de anular el <strong>Pedido <span id="modal-order-id"></span></strong>.</p>
+                <div class="mb-3">
+                    <label for="motivo-anulacion" class="form-label">Motivo de anulación:</label>
+                    <textarea class="form-control" id="motivo-anulacion" rows="3" required></textarea>
+                </div>
+                <div id="anular-alert" class="alert d-none mt-3" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmAnulationBtn">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
